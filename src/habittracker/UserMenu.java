@@ -85,6 +85,16 @@ public class UserMenu extends JFrame {
 			}
 		});
 		
+		JButton btnPrieteni = new JButton("Prieteni");
+		btnPrieteni.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnPrieteni.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(216, 191, 216), new Color(216, 191, 216), new Color(216, 191, 216), new Color(216, 191, 216)));
+		btnPrieteni.setBackground(new Color(216, 191, 216));
+		btnPrieteni.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			Friends f= new Friends();
+				dispose();
+			}
+		});
 		
 		
 		
@@ -100,6 +110,7 @@ public class UserMenu extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(173)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnPrieteni, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnBadges, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 							.addComponent(btnLogout, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -119,11 +130,12 @@ public class UserMenu extends JFrame {
 					.addComponent(btnViewHabits, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(btnBadges, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-					.addGap(107)
+					.addGap(33)
+					.addComponent(btnPrieteni, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+					.addGap(37)
 					.addComponent(btnLogout, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(24, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
-
 }

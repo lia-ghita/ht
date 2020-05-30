@@ -4,6 +4,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import habittracker.CurrentUser;
 public class UserDAO {
 
 	
@@ -23,6 +25,7 @@ public class UserDAO {
 		}catch(Exception e){System.out.println(e);}
 		return status;
 	}
+	
 	public static int delete(String id){
 		int status=0;
 		try{
@@ -61,9 +64,69 @@ public class UserDAO {
 			while (rs.next()) {
 				 id=rs.getInt("id");
 			}
+			con.close();
 			//System.out.println(rs);
 		}catch(Exception e){System.out.println(e);}
 		return id;
+	}
+	
+	public static String getUserName(String uid){
+		String name="";
+		try{
+			Connection con=DB.getConnection();
+			PreparedStatement ps=con.prepareStatement("select name from users where id=?");
+			ps.setString(1,uid);			
+			ResultSet rs=ps.executeQuery();
+			while (rs.next()) {
+				name =rs.getString("name");
+			}
+			con.close();
+			//System.out.println(rs);
+		}catch(Exception e){System.out.println(e);}
+		return name;
+	}
+	
+	public static int addFriend(int uid){
+		int id=-1;
+		try{
+			Connection con=DB.getConnection();			
+			PreparedStatement ps=con.prepareStatement("insert into friends(user_id,friend_id) values(?,?)");
+			ps.setInt(1,CurrentUser.id);
+			ps.setInt(2, uid);
+			 id=ps.executeUpdate();
+			con.close();
+			//System.out.println(rs);
+		}
+		catch(Exception e){System.out.println(e);
+		System.out.println("am ajuns");
+		}
+		return id;
+	}
+	
+	public static ResultSet getMyFriends(String name){
+		ResultSet rs = null;
+		try{
+			Connection con=DB.getConnection();
+			PreparedStatement ps=con.prepareStatement("select friend_id from friends where user_id=?");
+			ps.setInt(1,CurrentUser.id);
+			rs=ps.executeQuery();
+			
+		
+		}catch(Exception e){System.out.println(e);}
+		return rs;
+	}
+
+	public static ResultSet getFriendsOfOthers(String nume){
+		ResultSet rs = null;
+		try{
+			Connection con=DB.getConnection();
+			PreparedStatement ps=con.prepareStatement("select friend_id from friends where user_id=(select id from users where name=?)");
+			ps.setString(1,nume);
+			rs=ps.executeQuery();
+			
+			//System.out.println(rs);
+		}catch(Exception e){System.out.println(e);}
+		return rs;
 	}
 
 }

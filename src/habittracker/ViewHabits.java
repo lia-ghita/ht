@@ -36,34 +36,7 @@ public class ViewHabits extends JFrame {
 	private JTable table;
 	static String data[][] = null;
 	static String column[] = null;
-	
 
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public ViewHabits() {
 		this.setVisible(true);
 
@@ -105,33 +78,6 @@ public class ViewHabits extends JFrame {
 		sp.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(216, 191, 216), new Color(216, 191, 216),
 				new Color(216, 191, 216), new Color(216, 191, 216)));
 		sp.setBackground(new Color(255, 255, 255));
-		
-
-	
-
-		
-		
-		
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
 		// Actiunile butoanelor
 

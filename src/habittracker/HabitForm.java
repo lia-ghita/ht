@@ -75,10 +75,6 @@ public class HabitForm extends JFrame {
 		getContentPane().add(lblNewLabel);
 	}
 
-
-
-
-	
 		
 	
 }
