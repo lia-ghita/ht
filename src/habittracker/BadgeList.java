@@ -14,12 +14,14 @@ import dao.BadgeHistoryDAO;
 import javax.swing.JList;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JScrollPane;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Component;
 import javax.swing.JButton;
+import javax.swing.JScrollBar;
 
 public class BadgeList extends JFrame {
 	private JPanel contentPane;
@@ -60,14 +62,18 @@ public class BadgeList extends JFrame {
 		
 		panel.setBounds(10, 50, 545, 308);
 		contentPane.add(panel);
+		
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JScrollPane scrollPane = new JScrollPane();
-		panel.add(scrollPane);
-		
+
 		JButton btnNewButton = new JButton("Inapoi la meniul principal");
 		btnNewButton.setBounds(338, 368, 217, 23);
 		contentPane.add(btnNewButton);
+		/*
+		 * JScrollPane scrollPane=new JScrollPane(panel,
+		 * ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+		 * ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); contentPane.add(scrollPane);
+		 */
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

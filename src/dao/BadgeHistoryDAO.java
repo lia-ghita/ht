@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,20 +26,8 @@ public class BadgeHistoryDAO {
 		
 			ResultSet rs=ps.executeQuery();
 			ResultSetMetaData rsmd = rs.getMetaData();
-			int columnsNumber = rsmd.getColumnCount();
+		//	int columnsNumber = rsmd.getColumnCount();
 		
-			/*
-			 * while (rs.next()) { for (int i = 1; i <= columnsNumber; i++) { if (i > 1)
-			 * System.out.print(",  "); String columnValue = rs.getString(i);
-			 * System.out.print(columnValue);
-			 * 
-			 * } System.out.println("");
-			 * 
-			 * 
-			 * name = rs.getString("name"); System.out.println(name); description =
-			 * rs.getString("description"); System.out.println(description); Badge badge=
-			 * new Badge(name, description); badges.add(badge); }
-			 */
 			badges.clear();
 					
 			while (rs.next()) {
@@ -59,6 +49,33 @@ public class BadgeHistoryDAO {
 		return badges;
 	}
 
+	public static InputStream getBadgeImage(String name){
+		InputStream binaryStream=null;
+	
+		try{
+			Connection con=DB.getConnection();
+		//	PreparedStatement ps=con.prepareStatement("select name, description from badges where id in(select badge_id from badge_history where user_id=?)");
+			PreparedStatement ps=con.prepareStatement("select imagine from badges where name=? ");
+			ps.setString(1,name);
+		
+			ResultSet rs=ps.executeQuery();
+			
+			
+			
+			
+			while (rs.next()) {
+			
+				Blob imageBlob = rs.getBlob(1);
+				binaryStream = imageBlob.getBinaryStream(1, imageBlob.length());
+			}
+			
+			
+			con.close();
+		}catch(Exception e){System.out.println(e);}
+		
+		return binaryStream;
+	}
+	
 
 
 	}
