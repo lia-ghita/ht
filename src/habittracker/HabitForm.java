@@ -65,6 +65,8 @@ public class HabitForm extends JFrame {
 		btncancel.setForeground(new Color(0, 0, 0));
 		btncancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				new UserMenu();	
+				dispose();
 			}
 		});
 		btncancel.setBounds(310, 162, 161, 23);

@@ -74,7 +74,7 @@ public class AdminSuccess extends JFrame {
 		separator.setBounds(97, 157, 369, 2);
 		
 		JButton btnObiceiuri = new JButton("Obiceiuri");
-		btnObiceiuri.setBounds(72, 199, 183, 35);
+		btnObiceiuri.setBounds(197, 201, 183, 35);
 		btnObiceiuri.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnObiceiuri.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(216, 191, 216), new Color(216, 191, 216), new Color(216, 191, 216), new Color(216, 191, 216)));
 		btnObiceiuri.setBackground(new Color(216, 191, 216));
@@ -83,12 +83,6 @@ public class AdminSuccess extends JFrame {
 			AdminViewHabits nF = new AdminViewHabits();
 			}
 		});
-		
-		JButton btnBadges = new JButton("Badges");
-		btnBadges.setBounds(309, 199, 179, 34);
-		btnBadges.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnBadges.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(216, 191, 216), new Color(216, 191, 216), new Color(216, 191, 216), new Color(216, 191, 216)));
-		btnBadges.setBackground(new Color(216, 191, 216));
 		
 		
 		
@@ -100,7 +94,6 @@ public class AdminSuccess extends JFrame {
 		contentPane.add(btnCreeazaCont);
 		contentPane.add(btnViewUsers);
 		contentPane.add(btnObiceiuri);
-		contentPane.add(btnBadges);
 		contentPane.add(lblAdminSection);
 	}
 }

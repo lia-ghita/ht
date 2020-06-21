@@ -32,9 +32,7 @@ public class Badge {
 	}
 	
 	
-	  public  String Display () { 
-		  
-		  
+	  public  String toString() {  
 		  String text= "You have won: " + name+ " "+ description; 
 		  return text; 
 		  
@@ -45,9 +43,6 @@ public class Badge {
 		  Dimension d = new Dimension(20,200);
 		  
 		  JTextArea jTA = new JTextArea();
-
-	//	  jTA.setBackground(g);
-	//	  jTA.setSize(d);
 		  jTA.setBounds(10,10,100,100);
 		  String text= "You have won:\n " + name+ "\n\n "+ description; 
 		  jTA.append(text);

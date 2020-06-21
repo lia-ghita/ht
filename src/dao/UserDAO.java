@@ -86,6 +86,7 @@ public class UserDAO {
 		return name;
 	}
 	
+
 	public static int addFriend(int uid){
 		int id=-1;
 		try{
@@ -103,28 +104,24 @@ public class UserDAO {
 		return id;
 	}
 	
-	public static ResultSet getMyFriends(String name){
+	public static ResultSet getFriends(int id){
 		ResultSet rs = null;
 		try{
 			Connection con=DB.getConnection();
 			PreparedStatement ps=con.prepareStatement("select friend_id from friends where user_id=?");
-			ps.setInt(1,CurrentUser.id);
-			rs=ps.executeQuery();
-			
-		
+			ps.setInt(1,id);
+			rs=ps.executeQuery();	
 		}catch(Exception e){System.out.println(e);}
 		return rs;
 	}
 
-	public static ResultSet getFriendsOfOthers(String nume){
+	
+	public static ResultSet getAllFriends(){
 		ResultSet rs = null;
 		try{
 			Connection con=DB.getConnection();
-			PreparedStatement ps=con.prepareStatement("select friend_id from friends where user_id=(select id from users where name=?)");
-			ps.setString(1,nume);
-			rs=ps.executeQuery();
-			
-			//System.out.println(rs);
+			PreparedStatement ps=con.prepareStatement("select user_id, friend_id from friends");
+			rs=ps.executeQuery();	
 		}catch(Exception e){System.out.println(e);}
 		return rs;
 	}

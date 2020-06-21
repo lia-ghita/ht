@@ -65,7 +65,7 @@ public static int delete(String id){
 	int status=0;
 	try{
 		Connection con=DB.getConnection();
-		PreparedStatement ps=con.prepareStatement("delete from habits where id=?");
+		PreparedStatement ps=con.prepareStatement("call deleteHabitWithData (?)");
 		ps.setString(1,id);
 		status=ps.executeUpdate();
 		con.close();

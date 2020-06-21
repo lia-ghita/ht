@@ -1,4 +1,5 @@
 package habittracker;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -7,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import dao.HabitDAO;
 import dao.UserDAO;
 
 import javax.swing.GroupLayout;
@@ -33,8 +33,9 @@ public class Friends extends JFrame {
 	
 
 	private JTextField textField_1;  
-	private ArrayList<String> myFriendsList = new ArrayList<String> ();
-	private ArrayList<String> otherFriendList= new ArrayList<String> ();
+	private static ArrayList<String> myFriendsList = new ArrayList<String> ();
+	private static ArrayList<String> otherFriendList= new ArrayList<String> ();
+	private static ArrayList<Friendship> allFriendsList= new ArrayList<Friendship> ();
 	public Friends() {
 		getContentPane().setBackground(new Color(255, 255, 255));
 		this.setVisible(true);
@@ -62,7 +63,7 @@ public class Friends extends JFrame {
 				int i=UserDAO.addFriend(uid);
 				textField_1.setText("");
 				if(i>0){
-					  System.out.println("Prieten adaugat");	  
+					JOptionPane.showMessageDialog(null, "Prietenul a fost adaugat cu succes!");  
 					  }
 				else JOptionPane.showMessageDialog(null, "Prietenul exista deja!");
 				}
@@ -78,6 +79,8 @@ public class Friends extends JFrame {
 		btncancel.setForeground(new Color(0, 0, 0));
 		btncancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				new UserMenu();	
+				dispose();
 			}
 		});
 		btncancel.setBounds(310, 162, 161, 23);
@@ -90,49 +93,62 @@ public class Friends extends JFrame {
 		JButton btnVeziPrieteniComuni = new JButton("Vezi prieteni comuni");
 		btnVeziPrieteniComuni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				{ String friend=textField_1.getText(); 
-				ResultSet myFriends=UserDAO.getMyFriends(friend);
-				ResultSet otherFriends=UserDAO.getFriendsOfOthers(friend);
-			
+				{ String friend=textField_1.getText(); 		
+				int uid=UserDAO.getUserId(friend);	
+				ResultSet allFriends=UserDAO.getAllFriends();			
 				try {
-					while(myFriends.next()){
-					String	id = myFriends.getString("friend_id");
-					myFriendsList.add(id);
-					PrieteniComuni.setText("Prieteni:\n");
-					//PrieteniComuni.append(id + "\n");
-					  }
-					while(otherFriends.next()) {
-						String	id2 = otherFriends.getString("friend_id");
-						otherFriendList.add(id2);
-					//	PrieteniComuni.append(id2 + "\n");
+					while(allFriends.next()) {
+						String	user = allFriends.getString("user_id");
+						String uFriend =allFriends.getString("friend_id");
+						Friendship fr = new Friendship(user, uFriend);		
+						allFriendsList.add(fr);	
 					}
-					
-						
+					findCommonFriends(CurrentUser.id,uid);				
+					PrieteniComuni.setText("Prieteni comuni:\n\n");
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					
+					e1.printStackTrace();					
 				}}
-				
-				 myFriendsList.retainAll( otherFriendList );
-			        System.out.println( myFriendsList );
-			        for (int i=0; i<myFriendsList.size(); i++){
-			String name=UserDAO.getUserName(myFriendsList.get(i));
-			        	PrieteniComuni.append(name + "\n");
-		}
-			        
+				if (myFriendsList.size()>0){
+			 for (String entry:myFriendsList){
+			 String name=UserDAO.getUserName(entry);
+			 PrieteniComuni.append(name + "\n"); 	
+		     }	        
+			} else PrieteniComuni.append("Nu exista prieteni comuni\n"); 
 			}
 		});
-		
-       
-		
+				
 		btnVeziPrieteniComuni.setForeground(Color.BLACK);
 		btnVeziPrieteniComuni.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(216, 191, 216), new Color(216, 191, 216), new Color(216, 191, 216), new Color(216, 191, 216)));
 		btnVeziPrieteniComuni.setBackground(new Color(216, 191, 216));
 		btnVeziPrieteniComuni.setBounds(223, 210, 164, 23);
 		getContentPane().add(btnVeziPrieteniComuni);
+		String userName=(UserDAO.getUserName(String.valueOf(CurrentUser.id)));
+		JLabel lblUser = new JLabel("User: " + userName);
 		
-		
+		lblUser.setBounds(419, 11, 103, 14);
+		getContentPane().add(lblUser);
+	
 	}
+	
+	public static void findCommonFriends(int user, int friend) {
+		myFriendsList.clear();
+		otherFriendList.clear();
+		for (Friendship f:allFriendsList) {			
+			String u= f.getUser();			
+			if (u.contentEquals(String.valueOf(user))) {
+				myFriendsList.add(f.getFriend());
+			}
+			else if (u.contentEquals(String.valueOf(friend))) {
+				otherFriendList.add(f.getFriend());
+			}
+		}	 
+		myFriendsList.retainAll(otherFriendList);
+	}
+	
+	
+	
+	
 }
 
 
